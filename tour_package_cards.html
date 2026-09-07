@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Tour Packages - Sariputra Tour & Holidays</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8b1e0f;
+            --primary-dark: #661207;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --bg-body: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-md: 0 10px 25px -5px rgba(0,0,0,0.08);
+            --radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px 12px;
+        }
+
+        .container {
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+
+        /* Section Header */
+        .section-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .badge-tag {
+            display: inline-block;
+            background: #fef3c7;
+            color: #b45309;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 6px 14px;
+            border-radius: 50px;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* Filter Controls */
+        .controls-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+            background: #ffffff;
+            padding: 16px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .btn-filter {
+            background: #f1f5f9;
+            border: none;
+            color: var(--text-muted);
+            padding: 10px 18px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-filter:hover, .btn-filter.active {
+            background: var(--primary);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(139, 30, 15, 0.25);
+        }
+
+        .search-box {
+            position: relative;
+            min-width: 260px;
+            flex-grow: 1;
+            max-width: 320px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 16px 10px 38px;
+            border-radius: 50px;
+            border: 1px solid var(--border-color);
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* Cards Grid */
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 24px;
+        }
+
+        /* Package Card */
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-image-wrap {
+            position: relative;
+            height: 210px;
+            overflow: hidden;
+        }
+
+        .card-image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-image-wrap img {
+            transform: scale(1.06);
+        }
+
+        .card-tag {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(4px);
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card-duration {
+            position: absolute;
+            bottom: 14px;
+            right: 14px;
+            background: #ffffff;
+            color: var(--text-main);
+            font-weight: 800;
+            font-size: 12px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .card-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .card-route {
+            font-size: 13px;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-highlights {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 16px;
+            border: 1px solid #edf2f7;
+        }
+
+        .highlight-item {
+            font-size: 12.5px;
+            color: #475569;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+
+        .highlight-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .highlight-item strong {
+            color: var(--text-main);
+        }
+
+        .included-icons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 18px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .icon-pill {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: #f1f5f9;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .card-footer {
+            margin-top: auto;
+            padding-top: 14px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .price-box {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .price-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .price-value {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .price-unit {
+            font-size: 11px;
+            color: #64748b;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-details {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-details:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+
+        .btn-whatsapp {
+            background: #25d366;
+            color: #ffffff;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s ease;
+        }
+
+        .btn-whatsapp:hover {
+            background: #1da851;
+        }
+
+        /* Modal / Itinerary Drawer */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 16px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-card {
+            background: #ffffff;
+            border-radius: 20px;
+            max-width: 680px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            padding: 24px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #f1f5f9;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: #e2e8f0;
+            color: var(--text-main);
+        }
+
+        .modal-header {
+            margin-bottom: 20px;
+            padding-right: 40px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .modal-subtitle {
+            font-size: 14px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .itinerary-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .day-box {
+            border-left: 3px solid var(--primary);
+            padding-left: 16px;
+            background: #f8fafc;
+            padding: 12px 16px;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .day-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .day-desc {
+            font-size: 13.5px;
+            color: #475569;
+        }
+
+        .price-breakdown-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+
+        .price-breakdown-table th, .price-breakdown-table td {
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .price-breakdown-table th {
+            background: #f1f5f9;
+            font-weight: 700;
+        }
+
+        @media (max-width: 640px) {
+            .controls-wrapper {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .search-box {
+                max-width: 100%;
+            }
+            .packages-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="section-header">
+        <span class="badge-tag">Sariputra Tour & Holidays</span>
+        <h2 class="section-title">Explore Trending All-India Tour Packages</h2>
+        <p class="section-subtitle">Complete day & night itineraries, verified hotel bookings, and private AC vehicles with experienced drivers from Bodh Gaya across India.</p>
+    </div>
+
+    <!-- Filter & Search Controls -->
+    <div class="controls-wrapper">
+        <div class="filter-buttons">
+            <button class="btn-filter active" onclick="filterCategory('all')">All Tours</button>
+            <button class="btn-filter" onclick="filterCategory('pilgrimage')">☸ Pilgrimage</button>
+            <button class="btn-filter" onclick="filterCategory('heritage')">🏰 Heritage</button>
+            <button class="btn-filter" onclick="filterCategory('hills')">🏔️ Hills & Nature</button>
+            <button class="btn-filter" onclick="filterCategory('south')">🌴 South India</button>
+        </div>
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" onkeyup="searchPackages()" placeholder="Search destination, state or route...">
+        </div>
+    </div>
+
+    <!-- Dynamic Cards Container -->
+    <div class="packages-grid" id="packagesGrid">
+        <!-- Cards rendered via JavaScript -->
+    </div>
+</div>
+
+<!-- Detailed Itinerary Modal -->
+<div class="modal-overlay" id="packageModal">
+    <div class="modal-card">
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <div class="modal-header">
+            <h3 class="modal-title" id="modalTitle">Tour Name</h3>
+            <p class="modal-subtitle" id="modalRoute">Route Details</p>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <h4 style="font-size: 15px; margin-bottom: 10px; color: var(--text-main);">💰 Pricing & Cost Breakdown (Per Person)</h4>
+            <table class="price-breakdown-table">
+                <thead>
+                    <tr>
+                        <th>Hotel Level</th>
+                        <th>Per Day Cost (Approx)</th>
+                        <th>Total Package Cost</th>
+                    </tr>
+                </thead>
+                <tbody id="modalPricingTable">
+                    <!-- Dynamic pricing rows -->
+                </tbody>
+            </table>
+        </div>
+
+        <h4 style="font-size: 15px; margin-bottom: 12px; color: var(--text-main);">🗓️ Day-by-Day Itinerary & Hotel Details</h4>
+        <div class="itinerary-list" id="modalItinerary">
+            <!-- Dynamic day list -->
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <a id="modalWhatsappBtn" href="#" target="_blank" class="btn-whatsapp" style="padding: 12px 24px; font-size: 15px; border-radius: 50px;">
+                💬 Book This Package on WhatsApp (+91 99399 95360)
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    const packagesData = [
+        {
+            id: 'buddhist-circuit',
+            category: 'pilgrimage',
+            title: 'Buddhist Circuit Pilgrimage',
+            tag: 'Popular Pilgrimage',
+            duration: '5 Days / 4 Nights',
+            route: 'Bodh Gaya ➔ Rajgir ➔ Nalanda ➔ Varanasi ➔ Kushinagar',
+            image: 'https://upload.wikimedia.org/wikipedia/commons/b/b3/Mahabodhi_Temple_-_Bodh_Gaya.jpg',
+            priceStarting: 12500,
+            perDayPrice: 2500,
+            hotelDetails: '4 Nights Stay (2N Bodh Gaya, 1N Varanasi, 1N Kushinagar)',
+            vehicle: 'Option of Urbania, Tempo Traveller or Innova',
+            pricingOptions: [
+                { category: 'Budget Hotels (Clean AC Room)', perDay: '₹2,500 / day', total: '₹12,500 / person' },
+                { category: '3-Star Deluxe (Breakfast Included)', perDay: '₹3,700 / day', total: '₹18,500 / person' },
+                { category: '4-Star Premium (Breakfast + Dinner)', perDay: '₹5,600 / day', total: '₹28,000 / person' }
+            ],
+            itinerary: [
+                { day: 'Day 1: Bodh Gaya Arrival & Temple Visit', desc: 'Pickup from Bodh Gaya / Gaya Airport/Railway Station. Visit Mahabodhi Temple, Thai Monastery, Japanese Temple, and 80-foot Buddha statue. Night stay in Bodh Gaya hotel.' },
+                { day: 'Day 2: Rajgir & Nalanda Excursion', desc: 'Drive to Rajgir. Visit Vulture Peak (Griddhakuta), Vishwa Shanti Stupa, and Bimbisara Jail. Tour ancient Nalanda University ruins & museum. Return to Bodh Gaya for night stay.' },
+                { day: 'Day 3: Bodh Gaya to Varanasi & Ganga Aarti', desc: 'Drive to sacred Varanasi. Check into hotel. Evening enjoy Ganga Aarti boat ride at Dashashwamedh Ghat. Night stay in Varanasi hotel.' },
+                { day: 'Day 4: Sarnath Tour to Kushinagar', desc: 'Visit Sarnath (Dhamek Stupa, Mulagandha Kuti Vihar, Sarnath Museum). Drive to Kushinagar. Check in and night stay in Kushinagar hotel.' },
+                { day: 'Day 5: Mahaparinirvana Temple & Departure', desc: 'Visit Mahaparinirvana Temple and Ramabhar Stupa. Departure transfer to Gorakhpur or Varanasi airport/railway station.' }
+            ]
+        },
+        {
+            id: 'golden-triangle',
+            category: 'heritage',
+            title: 'Golden Triangle Classic Tour',
+            tag: 'Best Seller',
+            duration: '6 Days / 5 Nights',
+            route: 'Delhi ➔ Agra ➔ Jaipur ➔ Delhi',
+            image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?q=80&w=800&auto=format&fit=crop',
+            priceStarting: 16000,
+            perDayPrice: 2666,
+            hotelDetails: '5 Nights Stay (1N Delhi, 1N Agra, 2N Jaipur, 1N Delhi)',
+            vehicle: 'Private Sedan, Ertiga, Innova or Force Urbania',
+            pricingOptions: [
+                { category: '3-Star Comfort Hotels', perDay: '₹2,666 / day', total: '₹16,000 / person' },
+                { category: '4-Star Executive Hotels', perDay: '₹3,833 / day', total: '₹23,000 / person' },
+                { category: '5-Star Luxury Resorts', perDay: '₹6,500 / day', total: '₹39,000 / person' }
+            ],
+            itinerary: [
+                { day: 'Day 1: Delhi Arrival & Capital City Tour', desc: 'Pick up in Delhi. Visit Red Fort, Jama Masjid, Qutub Minar, and drive past India Gate and Parliament House. Night stay in Delhi hotel.' },
+                { day: 'Day 2: Delhi to Agra & Taj Mahal Sunset', desc: 'Drive to Agra via Yamuna Expressway. Check in hotel. Visit Taj Mahal at sunset and Agra Fort. Night stay in Agra hotel.' },
+                { day: 'Day 3: Agra to Jaipur via Fatehpur Sikri', desc: 'Drive to Jaipur. En route visit ghost city Fatehpur Sikri and Buland Darwaza. Check in Jaipur hotel and night stay.' },
+                { day: 'Day 4: Jaipur Pink City Sightseeing', desc: 'Visit Amber Fort (elephant/jeep ride), City Palace, Hawa Mahal (Palace of Winds), and Jantar Mantar observatory. Night stay in Jaipur hotel.' },
+                { day: 'Day 5: Local Markets & Cultural Village', desc: 'Explore local Rajasthani handicraft bazaars and evening visit Chokhi Dhani cultural village. Night stay in Jaipur.' },
+                { day: 'Day 6: Return Drive to Delhi', desc: 'Drive back to Delhi for airport or railway station drop.' }
+            ]
+        },
+        {
+            id: 'gangtok-sikkim',
+            category: 'hills',
+            title: 'Gangtok & Sikkim Hill Odyssey',
+            tag: 'Trending Scenic',
+            duration: '6 Days / 5 Nights',
+            route: 'NJP / Bagdogra ➔ Gangtok ➔ Tsomgo Lake ➔ Darjeeling',
+            image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=800&auto=format&fit=crop',
+            priceStarting: 18500,
+            perDayPrice: 3083,
+            hotelDetails: '5 Nights Stay (3N Gangtok, 2N Darjeeling)',
+            vehicle: '4x4 SUV / Tempo Traveller for Mountain Terrain',
+            pricingOptions: [
+                { category: 'Standard Hill View Hotels', perDay: '₹3,083 / day', total: '₹18,500 / person' },
+                { category: '3-Star Premium Hotels', perDay: '₹4,166 / day', total: '₹25,000 / person' },
+                { category: 'Luxury Mountain Resorts', perDay: '₹6,333 / day', total: '₹38,000 / person' }
+            ],
+            itinerary: [
+                { day: 'Day 1: NJP/Bagdogra to Gangtok', desc: 'Pickup from NJP station or Bagdogra airport. Scenic drive along Teesta River to Gangtok (5,500 ft). Night stay in Gangtok hotel.' },
+                { day: 'Day 2: Excursion to Tsomgo Lake & Baba Mandir', desc: 'Day trip to high-altitude Tsomgo Lake (12,400 ft) and Baba Harbhajan Singh Mandir. Optional Nathula Pass permit. Night stay in Gangtok.' },
+                { day: 'Day 3: Gangtok City & Monastery Tour', desc: 'Visit Rumtek Monastery, Dro-dul Chorten, Cable Car ride, and MG Marg shopping walk. Night stay in Gangtok.' },
+                { day: 'Day 4: Gangtok to Darjeeling', desc: 'Drive to Darjeeling, Queen of the Hills. En route view lush tea gardens. Check in and night stay in Darjeeling.' },
+                { day: 'Day 5: Tiger Hill Sunrise & Darjeeling Tour', desc: '4 AM trip to Tiger Hill for Kanchenjunga sunrise. Visit Batasia Loop, Ghoom Monastery, Himalayan Mountaineering Institute. Night stay in Darjeeling.' },
+                { day: 'Day 6: Departure Drop to NJP/Bagdogra', desc: 'After breakfast, transfer back to NJP station or Bagdogra airport.' }
+            ]
+        },
+        {
+            id: 'char-dham',
+            category: 'pilgrimage',
+            title: 'Sacred Char Dham Yatra',
+            tag: 'Sacred Pilgrimage',
+            duration: '10 Days / 9 Nights',
+            route: 'Haridwar ➔ Yamunotri ➔ Gangotri ➔ Kedarnath ➔ Badrinath',
+            image: 'https://images.unsplash.com/photo-1506015391300-4802dc74de2e?q=80&w=800&auto=format&fit=crop',
+            priceStarting: 28000,
+            perDayPrice: 2800,
+            hotelDetails: '9 Nights Stay across Himalayan Pilgrimage Towns',
+            vehicle: 'Experienced Mountain Driver with Urbania / Bus',
+            pricingOptions: [
+                { category: 'Standard Pilgrimage Lodges', perDay: '₹2,800 / day', total: '₹28,000 / person' },
+                { category: '3-Star Deluxe Hotel Package', perDay: '₹3,800 / day', total: '₹38,000 / person' }
+            ],
+            itinerary: [
+                { day: 'Day 1: Haridwar Arrival & Barkot Drive', desc: 'Pick up in Haridwar. Scenic drive through Mussoorie and Kempty Falls to Barkot. Night stay in Barkot.' },
+                { day: 'Day 2: Barkot ➔ Yamunotri Temple Trek ➔ Barkot', desc: 'Trek to Yamunotri shrine (6 km trek or pony/doli). Holy bath in Surya Kund and darshan. Return to Barkot for night stay.' },
+                { day: 'Day 3: Barkot to Uttarkashi', desc: 'Drive to Uttarkashi. Visit Kashi Vishwanath Temple on the banks of River Bhagirathi. Night stay in Uttarkashi.' },
+                { day: 'Day 4: Uttarkashi ➔ Gangotri Temple ➔ Uttarkashi', desc: 'Day excursion to sacred Gangotri Temple (10,000 ft). Offer prayers and return to Uttarkashi for night stay.' },
+                { day: 'Day 5: Uttarkashi to Guptkashi', desc: 'Drive to Guptkashi along Mandakini River. Night stay in Guptkashi.' },
+                { day: 'Day 6: Guptkashi ➔ Kedarnath Temple', desc: 'Trek or helicopter ride to Kedarnath Dham. Evening Aarti and overnight stay in Kedarnath near temple.' },
+                { day: 'Day 7: Kedarnath ➔ Guptkashi Return', desc: 'Morning darshan at Kedarnath. Trek back down to Gaurikund and drive back to Guptkashi for night stay.' },
+                { day: 'Day 8: Guptkashi to Badrinath', desc: 'Drive via Joshimath to holy Badrinath Dham. Visit Tapt Kund and attend evening Aarti. Night stay in Badrinath.' },
+                { day: 'Day 9: Badrinath ➔ Mana Village ➔ Rudraprayag', desc: 'Morning darshan, visit Mana Village (last Indian village), Vyas Gufa, and drive to Rudraprayag for night stay.' },
+                { day: 'Day 10: Rudraprayag to Haridwar Departure', desc: 'Drive to Haridwar via Devprayag (confluence of Alaknanda & Bhagirathi). Drop at Haridwar station.' }
+            ]
+        },
+        {
+            id: 'kerala-backwaters',
+            category: 'south',
+            title: 'Kerala Backwaters & Hills Tour',
+            tag: 'Nature Special',
+            duration: '6 Days / 5 Nights',
+            route: 'Cochin ➔ Munnar ➔ Thekkady ➔ Alleppey Houseboat',
+            image: 'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?q=80&w=800&auto=format&fit=crop',
+            priceStarting: 17500,
+            perDayPrice: 2916,
+            hotelDetails: '5 Nights Stay (2N Munnar, 1N Thekkady, 1N Deluxe Houseboat, 1N Cochin)',
+            vehicle: 'Private AC Ertiga, Innova or Tempo Traveller',
+            pricingOptions: [
+                { category: '3-Star Resort & Houseboat', perDay: '₹2,916 / day', total: '₹17,500 / person' },
+                { category: '4-Star Premium Resorts', perDay: '₹4,100 / day', total: '₹24,600 / person' }
+            ],
+            itinerary: [
+                { day: 'Day 1: Cochin Arrival & Transfer to Munnar', desc: 'Pick up at Cochin Airport/Station. Scenic drive to Munnar past Cheeyappara Waterfalls and tea gardens. Night stay in Munnar.' },
+                { day: 'Day 2: Full Day Munnar Hill Station Tour', desc: 'Visit Eravikulam National Park (Nilgiri Tahr), Mattupetty Dam, Echo Point, and Tea Museum. Night stay in Munnar.' },
+                { day: 'Day 3: Munnar to Thekkady Spice Plantation', desc: 'Drive to Thekkady. Boat safari on Periyar Lake inside wildlife sanctuary and spice garden walk. Night stay in Thekkady.' },
+                { day: 'Day 4: Thekkady to Alleppey Houseboat Cruise', desc: 'Board traditional Kettuvallam Houseboat at 12 PM. Cruise through backwater canals with all meals served on board. Night stay on Houseboat.' },
+                { day: 'Day 5: Alleppey to Cochin City Tour', desc: 'Disembark houseboat and drive to Cochin. Visit Chinese Fishing Nets, Fort Kochi, Mattancherry Palace. Night stay in Cochin.' },
+                { day: 'Day 6: Cochin Departure Drop', desc: 'Transfer to Cochin Airport / Railway Station for departure.' }
+            ]
+        },
+        {
+            id: 'rajasthan-royal',
+            category: 'heritage',
+            title: 'Royal Rajasthan Heritage Explorer',
+            tag: 'Heritage Special',
+            duration: '7 Days / 6 Nights',
+            route: 'Jaipur ➔ Jodhpur ➔ Udaipur ➔ Ajmer / Pushkar',
+            image: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?q=80&w=800&auto=format&fit=crop',
+            priceStarting: 19500,
+            perDayPrice: 2785,
+            hotelDetails: '6 Nights Stay in Heritage & Deluxe Hotels',
+            vehicle: 'Luxury AC Vehicle with Professional Guide',
+            pricingOptions: [
+                { category: '3-Star Heritage Hotels', perDay: '₹2,785 / day', total: '₹19,500 / person' },
+                { category: '4-Star Palace Stay Package', perDay: '₹4,200 / day', total: '₹29,400 / person' }
+            ],
+            itinerary: [
+                { day: 'Day 1: Jaipur Arrival', desc: 'Arrival in Pink City Jaipur. Visit Birla Temple and local markets. Night stay in Jaipur.' },
+                { day: 'Day 2: Full Day Forts & Palaces of Jaipur', desc: 'Explore Amber Fort, Jal Mahal, Hawa Mahal, and City Palace. Night stay in Jaipur.' },
+                { day: 'Day 3: Jaipur to Jodhpur (Blue City)', desc: 'Drive to Jodhpur. Visit Mehrangarh Fort, Jaswant Thada, and Umaid Bhawan Palace museum. Night stay in Jodhpur.' },
+                { day: 'Day 4: Jodhpur to Udaipur via Ranakpur', desc: 'Drive to City of Lakes Udaipur. En route visit famous Ranakpur Jain Temple (1,444 carved pillars). Night stay in Udaipur.' },
+                { day: 'Day 5: Udaipur Lake & Palace Tour', desc: 'Visit City Palace, Saheliyon Ki Bari, Jagdish Temple, and evening boat ride on Lake Pichola. Night stay in Udaipur.' },
+                { day: 'Day 6: Udaipur to Pushkar & Ajmer', desc: 'Drive to Pushkar. Visit Brahma Temple and holy Pushkar Lake. Drive to Ajmer Sharif Dargah. Night stay in Pushkar.' },
+                { day: 'Day 7: Departure Transfer to Jaipur / Ajmer', desc: 'Transfer to Jaipur or Ajmer railway station/airport.' }
+            ]
+        }
+    ];
+
+    function renderPackages(data) {
+        const grid = document.getElementById('packagesGrid');
+        grid.innerHTML = '';
+
+        data.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <div class="card-image-wrap">
+                    <img src="${item.image}" alt="${item.title}" loading="lazy">
+                    <span class="card-tag">${item.tag}</span>
+                    <span class="card-duration">⌛ ${item.duration}</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">${item.title}</h3>
+                    <div class="card-route">📍 ${item.route}</div>
+                    
+                    <div class="card-highlights">
+                        <div class="highlight-item">
+                            <span>Hotel Stay:</span>
+                            <strong>${item.hotelDetails}</strong>
+                        </div>
+                        <div class="highlight-item">
+                            <span>Vehicle Included:</span>
+                            <strong>${item.vehicle}</strong>
+                        </div>
+                    </div>
+
+                    <div class="included-icons">
+                        <span class="icon-pill">🚗 AC Ride</span>
+                        <span class="icon-pill">🏨 Hotel</span>
+                        <span class="icon-pill">☕ Breakfast</span>
+                        <span class="icon-pill">👨‍✈️ Driver</span>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="price-box">
+                            <span class="price-label">Starts From</span>
+                            <div>
+                                <span class="price-value">₹${item.priceStarting.toLocaleString('en-IN')}</span>
+                                <span class="price-unit">/ person</span>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn-details" onclick="openModal('${item.id}')">View Details</button>
+                            <a href="https://wa.me/919939995360?text=Hello%20Sariputra%20Tour%2C%20I%20am%20interested%20in%20the%20*${encodeURIComponent(item.title)}*%20package." target="_blank" class="btn-whatsapp">
+                                💬 WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    function filterCategory(cat) {
+        document.querySelectorAll('.btn-filter').forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+
+        if (cat === 'all') {
+            renderPackages(packagesData);
+        } else {
+            const filtered = packagesData.filter(item => item.category === cat);
+            renderPackages(filtered);
+        }
+    }
+
+    function searchPackages() {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        const filtered = packagesData.filter(item => 
+            item.title.toLowerCase().includes(query) || 
+            item.route.toLowerCase().includes(query) ||
+            item.tag.toLowerCase().includes(query)
+        );
+        renderPackages(filtered);
+    }
+
+    function openModal(id) {
+        const pkg = packagesData.find(p => p.id === id);
+        if (!pkg) return;
+
+        document.getElementById('modalTitle').innerText = pkg.title + ' (' + pkg.duration + ')';
+        document.getElementById('modalRoute').innerText = 'Route: ' + pkg.route;
+
+        // Pricing table
+        const pricingTbody = document.getElementById('modalPricingTable');
+        pricingTbody.innerHTML = '';
+        pkg.pricingOptions.forEach(row => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td style="font-weight:600;">${row.category}</td>
+                <td>${row.perDay}</td>
+                <td style="color:var(--primary); font-weight:700;">${row.total}</td>
+            `;
+            pricingTbody.appendChild(tr);
+        });
+
+        // Itinerary list
+        const itineraryContainer = document.getElementById('modalItinerary');
+        itineraryContainer.innerHTML = '';
+        pkg.itinerary.forEach(day => {
+            const box = document.createElement('div');
+            box.className = 'day-box';
+            box.innerHTML = `
+                <div class="day-title">${day.day}</div>
+                <div class="day-desc">${day.desc}</div>
+            `;
+            itineraryContainer.appendChild(box);
+        });
+
+        document.getElementById('modalWhatsappBtn').href = `https://wa.me/919939995360?text=Hello%20Sanjiv%20Singh%2C%20I%20want%20to%20book%20the%20*${encodeURIComponent(pkg.title)}*%20(${encodeURIComponent(pkg.duration)}).%20Please%20send%20final%20quotation.`;
+
+        document.getElementById('packageModal').classList.add('active');
+    }
+
+    function closeModal() {
+        document.getElementById('packageModal').classList.remove('active');
+    }
+
+    // Initial render
+    renderPackages(packagesData);
+</script>
+
+</body>
+</html>
