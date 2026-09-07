@@ -1,0 +1,159 @@
+<script>
+    const packagesData = [
+        {
+            id: 'buddhist-circuit',
+            category: 'pilgrimage',
+            title: 'Buddhist Circuit Pilgrimage',
+            tag: 'Popular Pilgrimage',
+            duration: '5 Days / 4 Nights',
+            route: 'Bodh Gaya ➔ Rajgir ➔ Nalanda ➔ Varanasi ➔ Kushinagar',
+            image: 'https://upload.wikimedia.org/wikipedia/commons/b/b3/Mahabodhi_Temple_-_Bodh_Gaya.jpg',
+            priceStarting: 12500,
+            hotelDetails: '4 Nights Stay (2N Bodh Gaya, 1N Varanasi, 1N Kushinagar)',
+            vehicle: 'Option of Urbania, Tempo Traveller or Innova',
+            pricingOptions: [
+                { category: 'Budget Hotels (Clean AC Room)', perDay: '₹2,500 / day', total: '₹12,500 / person' },
+                { category: '3-Star Deluxe (Breakfast Included)', perDay: '₹3,700 / day', total: '₹18,500 / person' },
+                { category: '4-Star Premium (Breakfast + Dinner)', perDay: '₹5,600 / day', total: '₹28,000 / person' }
+            ],
+            itinerary: [
+                { day: 'Day 1: Bodh Gaya Arrival & Temple Visit', desc: 'Pickup from Bodh Gaya / Gaya Airport/Railway Station. Visit Mahabodhi Temple, Thai Monastery, Japanese Temple, and 80-foot Buddha statue. Night stay in Bodh Gaya hotel.' },
+                { day: 'Day 2: Rajgir & Nalanda Excursion', desc: 'Drive to Rajgir. Visit Vulture Peak (Griddhakuta), Vishwa Shanti Stupa, and Bimbisara Jail. Tour ancient Nalanda University ruins & museum. Return to Bodh Gaya for night stay.' },
+                { day: 'Day 3: Bodh Gaya to Varanasi & Ganga Aarti', desc: 'Drive to sacred Varanasi. Check into hotel. Evening enjoy Ganga Aarti boat ride at Dashashwamedh Ghat. Night stay in Varanasi hotel.' },
+                { day: 'Day 4: Sarnath Tour to Kushinagar', desc: 'Visit Sarnath (Dhamek Stupa, Mulagandha Kuti Vihar, Sarnath Museum). Drive to Kushinagar. Check in and night stay in Kushinagar hotel.' },
+                { day: 'Day 5: Mahaparinirvana Temple & Departure', desc: 'Visit Mahaparinirvana Temple and Ramabhar Stupa. Departure transfer to Gorakhpur or Varanasi airport/railway station.' }
+            ]
+        },
+        {
+            id: 'golden-triangle',
+            category: 'heritage',
+            title: 'Golden Triangle Classic Tour',
+            tag: 'Best Seller',
+            duration: '6 Days / 5 Nights',
+            route: 'Delhi ➔ Agra ➔ Jaipur ➔ Delhi',
+            image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?q=80&w=800&auto=format&fit=crop',
+            priceStarting: 16000,
+            hotelDetails: '5 Nights Stay (1N Delhi, 1N Agra, 2N Jaipur, 1N Delhi)',
+            vehicle: 'Private Sedan, Ertiga, Innova or Force Urbania',
+            pricingOptions: [
+                { category: '3-Star Comfort Hotels', perDay: '₹2,666 / day', total: '₹16,000 / person' },
+                { category: '4-Star Executive Hotels', perDay: '₹3,833 / day', total: '₹23,000 / person' },
+                { category: '5-Star Luxury Resorts', perDay: '₹6,500 / day', total: '₹39,000 / person' }
+            ],
+            itinerary: [
+                { day: 'Day 1: Delhi Arrival & Capital City Tour', desc: 'Pick up in Delhi. Visit Red Fort, Jama Masjid, Qutub Minar, and drive past India Gate and Parliament House. Night stay in Delhi hotel.' },
+                { day: 'Day 2: Delhi to Agra & Taj Mahal Sunset', desc: 'Drive to Agra via Yamuna Expressway. Check in hotel. Visit Taj Mahal at sunset and Agra Fort. Night stay in Agra hotel.' },
+                { day: 'Day 3: Agra to Jaipur via Fatehpur Sikri', desc: 'Drive to Jaipur. En route visit ghost city Fatehpur Sikri and Buland Darwaza. Check in Jaipur hotel and night stay.' },
+                { day: 'Day 4: Jaipur Pink City Sightseeing', desc: 'Visit Amber Fort (elephant/jeep ride), City Palace, Hawa Mahal (Palace of Winds), and Jantar Mantar observatory. Night stay in Jaipur hotel.' },
+                { day: 'Day 5: Local Markets & Cultural Village', desc: 'Explore local Rajasthani handicraft bazaars and evening visit Chokhi Dhani cultural village. Night stay in Jaipur.' },
+                { day: 'Day 6: Return Drive to Delhi', desc: 'Drive back to Delhi for airport or railway station drop.' }
+            ]
+        },
+        {
+            id: 'gangtok-sikkim',
+            category: 'hills',
+            title: 'Gangtok & Sikkim Hill Odyssey',
+            tag: 'Trending Scenic',
+            duration: '6 Days / 5 Nights',
+            route: 'NJP / Bagdogra ➔ Gangtok ➔ Tsomgo Lake ➔ Darjeeling',
+            image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=800&auto=format&fit=crop',
+            priceStarting: 18500,
+            hotelDetails: '5 Nights Stay (3N Gangtok, 2N Darjeeling)',
+            vehicle: '4x4 SUV / Tempo Traveller for Mountain Terrain',
+            pricingOptions: [
+                { category: 'Standard Hill View Hotels', perDay: '₹3,083 / day', total: '₹18,500 / person' },
+                { category: '3-Star Premium Hotels', perDay: '₹4,166 / day', total: '₹25,000 / person' },
+                { category: 'Luxury Mountain Resorts', perDay: '₹6,333 / day', total: '₹38,000 / person' }
+            ],
+            itinerary: [
+                { day: 'Day 1: NJP/Bagdogra to Gangtok', desc: 'Pickup from NJP station or Bagdogra airport. Scenic drive along Teesta River to Gangtok (5,500 ft). Night stay in Gangtok hotel.' },
+                { day: 'Day 2: Excursion to Tsomgo Lake & Baba Mandir', desc: 'Day trip to high-altitude Tsomgo Lake (12,400 ft) and Baba Harbhajan Singh Mandir. Optional Nathula Pass permit. Night stay in Gangtok.' },
+                { day: 'Day 3: Gangtok City & Monastery Tour', desc: 'Visit Rumtek Monastery, Dro-dul Chorten, Cable Car ride, and MG Marg shopping walk. Night stay in Gangtok.' },
+                { day: 'Day 4: Gangtok to Darjeeling', desc: 'Drive to Darjeeling, Queen of the Hills. En route view lush tea gardens. Check in and night stay in Darjeeling.' },
+                { day: 'Day 5: Tiger Hill Sunrise & Darjeeling Tour', desc: '4 AM trip to Tiger Hill for Kanchenjunga sunrise. Visit Batasia Loop, Ghoom Monastery, Himalayan Mountaineering Institute. Night stay in Darjeeling.' },
+                { day: 'Day 6: Departure Drop to NJP/Bagdogra', desc: 'After breakfast, transfer back to NJP station or Bagdogra airport.' }
+            ]
+        }
+    ];
+
+    function renderPackages(data) {
+        const grid = document.getElementById('packagesGrid');
+        grid.innerHTML = '';
+        data.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <div class="card-image-wrap">
+                    <img src="${item.image}" alt="${item.title}" loading="lazy">
+                    <span class="card-tag">${item.tag}</span>
+                    <span class="card-duration">⌛ ${item.duration}</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">${item.title}</h3>
+                    <div class="card-route">📍 ${item.route}</div>
+                    <div class="card-highlights">
+                        <div class="highlight-item"><span>Hotel Stay:</span><strong>${item.hotelDetails}</strong></div>
+                        <div class="highlight-item"><span>Vehicle Included:</span><strong>${item.vehicle}</strong></div>
+                    </div>
+                    <div class="included-icons">
+                        <span class="icon-pill">🚗 AC Ride</span>
+                        <span class="icon-pill">🏨 Hotel</span>
+                        <span class="icon-pill">☕ Breakfast</span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="price-box">
+                            <span style="font-size:11px; color:#64748b; text-transform:uppercase;">Starts From</span>
+                            <div><span class="price-value">₹${item.priceStarting.toLocaleString('en-IN')}</span><span style="font-size:11px;">/person</span></div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn-details" onclick="openModal('${item.id}')">View Details</button>
+                            <a href="https://wa.me/919939995360?text=Hello%20Sariputra%20Tour%2C%20I%20am%20interested%20in%20the%20*${encodeURIComponent(item.title)}*%20package." target="_blank" class="btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    function filterCategory(cat) {
+        document.querySelectorAll('.btn-filter').forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+        if (cat === 'all') renderPackages(packagesData);
+        else renderPackages(packagesData.filter(item => item.category === cat));
+    }
+
+    function searchPackages() {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        renderPackages(packagesData.filter(item => 
+            item.title.toLowerCase().includes(query) || item.route.toLowerCase().includes(query)
+        ));
+    }
+
+    function openModal(id) {
+        const pkg = packagesData.find(p => p.id === id);
+        if (!pkg) return;
+        document.getElementById('modalTitle').innerText = pkg.title + ' (' + pkg.duration + ')';
+        document.getElementById('modalRoute').innerText = 'Route: ' + pkg.route;
+
+        const pricingTbody = document.getElementById('modalPricingTable');
+        pricingTbody.innerHTML = '';
+        pkg.pricingOptions.forEach(row => {
+            pricingTbody.innerHTML += `<tr><td style="font-weight:600;">${row.category}</td><td>${row.perDay}</td><td style="color:var(--primary); font-weight:700;">${row.total}</td></tr>`;
+        });
+
+        const itineraryContainer = document.getElementById('modalItinerary');
+        itineraryContainer.innerHTML = '';
+        pkg.itinerary.forEach(day => {
+            itineraryContainer.innerHTML += `<div class="day-box"><div style="font-weight:700;">${day.day}</div><div style="font-size:13.5px; color:#475569;">${day.desc}</div></div>`;
+        });
+
+        document.getElementById('modalWhatsappBtn').href = `https://wa.me/919939995360?text=Hello%20Sanjiv%20Singh%2C%20I%20want%20to%20book%20the%20*${encodeURIComponent(pkg.title)}*%20(${encodeURIComponent(pkg.duration)}).%20Please%20send%20final%20quotation.`;
+        document.getElementById('packageModal').classList.add('active');
+    }
+
+    function closeModal() { document.getElementById('packageModal').classList.remove('active'); }
+
+    // Initial Render
+    renderPackages(packagesData);
+</script>
