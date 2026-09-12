@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lokeshrawani.github.io/SariputraTour.com/sitemap.xml
